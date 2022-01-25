@@ -9,5 +9,13 @@
 <body>
     <input type="text" placeholder="input...">
     <button>cancel</button>
+    <script src="./index.js"></script>
+    <script>
+        var inputEl = document.querySelector('input')
+        let count = 0
+        inputEl.oninput = function(){
+            console.log(`第${++count}次请求`)
+        }
+    </script>
 </body>
 </html>
