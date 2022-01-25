@@ -9,13 +9,30 @@
 <body>
     <input type="text" placeholder="input...">
     <button>cancel</button>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.2/underscore-umd-min.js"></script>
     <script src="./index.js"></script>
     <script>
         var inputEl = document.querySelector('input')
         let count = 0
-        inputEl.oninput = function(){
-            console.log(`第${++count}次请求`)
+        function changeInput(event){
+            console.log(`第${++count}次请求`,event,this)
+            return 'throttle-callbackValue'
         }
+        //引入第三方库调用_.throttle方法
+        // inputEl.oninput = _.throttle(changeInput,2000)
+
+
+        //自己实现throttle方法
+        const throttleChange = throttle(changeInput,3000,{leading:true,trailing:true},res=>{
+            console.log('call-back-fn:',res)
+        })
+        inputEl.oninput = throttleChange
+
+        var cancelEl = document.querySelector('button')
+        cancelEl.onclick = function(){
+            throttleChange.cancel()
+        }
+
     </script>
 </body>
 </html>
